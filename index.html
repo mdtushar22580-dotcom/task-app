@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task & Earn Hub</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --bg: #030712;
+      --card-bg: #0b0f19;
+      --sky-primary: #38bdf8;
+      --sky-glow: rgba(56, 189, 248, 0.4);
+      --text: #f8fafc;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 14px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+    }
+
+    .balance-box {
+      text-align: center;
+      background: linear-gradient(145deg, #070a12, #0f172a);
+      border: 1px solid var(--sky-primary);
+      box-shadow: 0 0 15px var(--sky-glow);
+    }
+
+    .balance {
+      font-size: 34px;
+      color: #38bdf8;
+      font-weight: 800;
+      text-shadow: 0 0 12px var(--sky-glow);
+      margin-top: 5px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn {
+      position: relative;
+      background: linear-gradient(135deg, #000000 0%, #031329 50%, #082f49 100%);
+      color: #38bdf8;
+      border: 1px solid var(--sky-primary);
+      padding: 14px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      box-shadow: 0 0 18px var(--sky-glow);
+      color: #ffffff;
+      border-color: #7dd3fc;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn-withdraw {
+      background: linear-gradient(135deg, #031021 0%, #0284c7 100%);
+      color: #ffffff;
+      font-size: 16px;
+      padding: 16px;
+      margin-top: 8px;
+      border: 1px solid #7dd3fc;
+      box-shadow: 0 0 15px var(--sky-glow);
+    }
+
+    h3 {
+      margin: 0 0 12px 0;
+      font-size: 14px;
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card balance-box">
+    <h3>মোট অর্জিত ব্যালেন্স</h3>
+    <div class="balance" id="balance">৳ 0.00</div>
+  </div>
+
+  <!-- এড দেখে ইনকাম সেকশন -->
+  <div class="card">
+    <h3>📺 Ad Earn (বিজ্ঞাপন দেখে ইনকাম)</h3>
+    <div class="grid">
+      <button class="btn" onclick="openLink('Https://omg10.com/4/11635816')">🎬 Ad Earn 1</button>
+      <button class="btn" onclick="openLink('Https://www.profitableratecpmnetwork.com/mc8zje23?key=a87e9978cdbfe3996bbc3275ec43bcb2')">📺 Ad Earn 2</button>
+      <button class="btn" onclick="openLink('Https://affectionatestorage.com/ez19Km')">⚡ Ad Earn 3</button>
+      <button class="btn" onclick="openLink('https://notik.me')">💎 Offerwall Ads</button>
+    </div>
+  </div>
+
+  <!-- সাইন আপ বা সার্ভে করে ইনকাম সেকশন -->
+  <div class="card">
+    <h3>📝 Signup Earn (সাইন-আপ ও সার্ভে)</h3>
+    <div class="grid">
+      <button class="btn" onclick="openLink('https://singingfiles.com/show.php?l=0&u=2551189&id=54746')">🤖 Signup Earn (Android)</button>
+      <button class="btn" onclick="openLink('https://singingfiles.com/show.php?l=0&u=2551189&id=54747')">🍎 Signup Earn (iPhone)</button>
+      <button class="btn" onclick="openLink('https://singingfiles.com/show.php?l=0&u=2551189&id=36521')">📱 Signup Earn (Mobile All)</button>
+    </div>
+  </div>
+
+  <!-- উইথড্র সেকশন -->
+  <div class="card">
+    <h3>উইথড্র সেকশন</h3>
+    <p style="font-size: 12px; color: #94a3b8; margin: 0 0 10px 0;">সর্বনিম্ন পেআউট লিমিট: ৳ ১০০ (বিকাশ / নগদ)</p>
+    <button class="btn btn-withdraw" onclick="withdraw()">💳 পেমেন্ট রিকোয়েস্ট দিন</button>
+  </div>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    let userBalance = 0.00;
+
+    function openLink(url) {
+      tg.openLink(url);
+    }
+
+    function withdraw() {
+      if (userBalance >= 100) {
+        let phone = prompt("আপনার বিকাশ/নগদ নম্বরটি দিন:");
+        if (phone) {
+          alert("পেমেন্ট রিকোয়েস্ট সফল হয়েছে! এডমিন শীঘ্রই প্রসেস করবেন।");
+          tg.sendData(JSON.stringify({ type: "WITHDRAWAL", amount: userBalance, number: phone }));
+        }
+      } else {
+        alert("আপনার ব্যালেন্স পর্যাপ্ত নয়। সর্বনিম্ন ১০০ টাকা হলে উইথড্র দেওয়া যাবে।");
+      }
+    }
+  </script>
+</body>
+</html>
