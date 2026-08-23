@@ -92,6 +92,7 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
       transition: all 0.3s ease;
       overflow: hidden;
+      text-decoration: none;
     }
 
     .btn:disabled {
@@ -141,23 +142,23 @@
 </head>
 <body>
 
-  <!-- সাজানো জরুরি নোটিশ বক্স -->
+  <!-- নিয়মাবলী বক্স -->
   <div class="card notice-box">
     <h3>📌 নিয়মাবলী ও কাজের নির্দেশিকা</h3>
     <ul>
       <li>প্রতিটি <b>অ্যাড (Ad)</b> দেখার সময় অবশ্যই মিনিমাম <b>২০ সেকেন্ড</b> অপেক্ষা করতে হবে।</li>
-      <li>প্রতিটি অ্যাড ভিউতে পাবেন: <b>৳০.১০ (১০ পয়সা)</b>।</li>
-      <li><b>Signup & Survey</b> কাজগুলোতে রুলস মেনে সম্পূর্ণ সঠিকভাবে সাইন-আপ করতে হবে (প্রতিটিতে <b>৳২.০০</b>)।</li>
+      <li>সফলভাবে ২০ সেকেন্ড পূর্ণ হলে অটোমেটিক ব্যালেন্সে <b>৳০.১০</b> যোগ হবে।</li>
+      <li><b>Signup & Survey</b> কাজগুলোতে রুলস মেনে সম্পূর্ণ সাইন-আপ করলে অটো <b>৳২.০০</b> যোগ হবে।</li>
       <li>প্রতিটি সফল <b>রেফারে</b> পাবেন: <b>৳১.০০</b>।</li>
     </ul>
   </div>
 
   <div class="card balance-box">
     <h3>মোট অর্জিত ব্যালেন্স</h3>
-    <div class="balance">৳ <span id="balance">0.00</span></div>
+    <div class="balance">৳ <span id="balance">5.00</span></div>
   </div>
 
-  <!-- এড দেখে ইনকাম সেকশন (২০ সেকেন্ড টাইমার) -->
+  <!-- এড দেখে ইনকাম সেকশন (অটো ১০ পয়সা যোগ) -->
   <div class="card">
     <h3>📺 Ad Earn (বিজ্ঞাপন দেখে ইনকাম)</h3>
     <p style="font-size: 11px; color: #94a3b8; margin-top:-8px;">প্রতি অ্যাডে পাবেন ৳০.১০ (২০ সেকেন্ড দেখতে হবে)</p>
@@ -165,15 +166,15 @@
       <button class="btn task-btn" onclick="startAdTask('Https://omg10.com/4/11635816', 0.10, 20)">🎬 Ad Earn 1</button>
       <button class="btn task-btn" onclick="startAdTask('Https://www.profitableratecpmnetwork.com/mc8zje23?key=a87e9978cdbfe3996bbc3275ec43bcb2', 0.10, 20)">📺 Ad Earn 2</button>
       <button class="btn task-btn" onclick="startAdTask('Https://affectionatestorage.com/ez19Km', 0.10, 20)">⚡ Ad Earn 3</button>
-      <button class="btn task-btn" onclick="startAdTask('https://notik.me', 0.15, 20)">💎 Offerwall Ads</button>
+      <button class="btn task-btn" onclick="startAdTask('https://notik.me', 0.10, 20)">💎 Offerwall Ads</button>
     </div>
     <div id="timer-status" class="timer-info" style="display: none;"></div>
   </div>
 
-  <!-- সাইন আপ বা সার্ভে করে ইনকাম সেকশন -->
+  <!-- সাইন আপ সেকশন -->
   <div class="card">
     <h3>📝 Signup Earn (সাইন-আপ ও সার্ভে)</h3>
-    <p style="font-size: 11px; color: #94a3b8; margin-top:-8px;">প্রতিটি সার্ভে/সাইন-আপে পাবেন ৳২.০০ (সঠিক নিয়মে করতে হবে)</p>
+    <p style="font-size: 11px; color: #94a3b8; margin-top:-8px;">প্রতিটি সার্ভে/সাইন-আপে পাবেন ৳২.০০</p>
     <div class="grid">
       <button class="btn task-btn" onclick="startSignupTask('https://singingfiles.com/show.php?l=0&u=2551189&id=54746')">🤖 Signup (Android)</button>
       <button class="btn task-btn" onclick="startSignupTask('https://singingfiles.com/show.php?l=0&u=2551189&id=54747')">🍎 Signup (iPhone)</button>
@@ -196,17 +197,31 @@
     <button class="btn btn-withdraw" id="withdraw-btn" disabled onclick="withdraw()">৳ ১০০ না হলে উইথড্র লক</button>
   </div>
 
+  <!-- উইথড্র হিস্ট্রি সেকশন -->
+  <div class="card">
+    <h3>📜 উইথড্র হিস্ট্রি (পেমেন্ট রেকর্ড)</h3>
+    <div id="history-list" style="font-size: 12px; color: #94a3b8; max-height: 150px; overflow-y: auto;">
+      <p style="text-align: center; margin: 10px 0;">কোনো উইথড্র রেকর্ড নেই।</p>
+    </div>
+  </div>
+
+  <!-- সাপোর্ট বাটন সেকশন -->
+  <div class="card" style="text-align: center; background: linear-gradient(145deg, #02233b, #070a12);">
+    <h3>💬 যেকোনো সমস্যায় যোগাযোগ</h3>
+    <a href="https://t.me/shorttimeearnsupport" target="_blank" class="btn" style="background: linear-gradient(135deg, #0369a1, #0284c7); justify-content: center;">
+      🎧 সরাসরি এডমিনের সাথে কথা বলুন (Support)
+    </a>
+  </div>
+
   <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // ==================== [বটের ইউজারনেম সেটআপ] ====================
     const BOT_USERNAME = "shorttimeearntabot"; 
     const MIN_WITHDRAW = 100.00;
-    // =============================================================
 
     const userId = tg.initDataUnsafe?.user?.id || "guest_user";
-    let userBalance = parseFloat(localStorage.getItem('user_bal_' + userId)) || 5.00; // সাইন-আপ বোনাস ৫ টাকা
+    let userBalance = parseFloat(localStorage.getItem('user_bal_' + userId)) || 5.00;
 
     function updateUI() {
       document.getElementById('balance').innerText = userBalance.toFixed(2);
@@ -224,7 +239,34 @@
       document.getElementById('ref-link').innerText = refUrl;
     }
 
-    // অ্যাড দেখার টাইমার ফাংশন (২০ সেকেন্ড)
+    function loadWithdrawHistory() {
+      const historyList = document.getElementById('history-list');
+      let history = JSON.parse(localStorage.getItem('withdraw_history_' + userId)) || [];
+      
+      if (history.length === 0) {
+        historyList.innerHTML = '<p style="text-align: center; margin: 10px 0;">কোনো উইথড্র রেকর্ড নেই।</p>';
+        return;
+      }
+
+      let html = '';
+      history.forEach(item => {
+        let badgeColor = item.status === 'Success' ? '#22c55e' : '#eab308';
+        html += `
+          <div style="background: #020617; border: 1px solid #1e293b; padding: 8px; border-radius: 8px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span style="color: #38bdf8; font-weight: bold;">৳${item.amount}</span> (${item.number})<br>
+              <span style="font-size: 10px; color: #64748b;">${item.date}</span>
+            </div>
+            <span style="background: ${badgeColor}22; color: ${badgeColor}; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold;">
+              ${item.status}
+            </span>
+          </div>
+        `;
+      });
+      historyList.innerHTML = html;
+    }
+
+    // অটো অ্যাড টাস্ক (২০ সেকেন্ড শেষ হলে অটো ১০ পয়সা যোগ হবে)
     function startAdTask(url, rewardAmount, waitSeconds = 20) {
       const timerStatus = document.getElementById('timer-status');
       const allButtons = document.querySelectorAll('.task-btn');
@@ -235,11 +277,11 @@
       tg.openLink(url);
 
       let timer = waitSeconds;
-      timerStatus.innerText = `⏳ টাস্ক ভেরিফাই হচ্ছে... ${timer} সেকেন্ড অ্যাপে থাকুন`;
+      timerStatus.innerText = `⏳ বিজ্ঞাপন ভিউ হচ্ছে... ${timer} সেকেন্ড অ্যাপে থাকুন`;
 
       let interval = setInterval(() => {
         timer--;
-        timerStatus.innerText = `⏳ টাস্ক ভেরিফাই হচ্ছে... ${timer} সেকেন্ড অ্যাপে থাকুন`;
+        timerStatus.innerText = `⏳ বিজ্ঞাপন ভিউ হচ্ছে... ${timer} সেকেন্ড অ্যাপে থাকুন`;
 
         if (timer <= 0) {
           clearInterval(interval);
@@ -249,16 +291,16 @@
 
           timerStatus.style.display = "none";
           allButtons.forEach(btn => btn.disabled = false);
-          alert(`🎉 অভিনন্দন! টাস্ক সফলভাবে সম্পন্ন হয়েছে। ৳${rewardAmount.toFixed(2)} যোগ হয়েছে!`);
+          alert(`🎉 অভিনন্দন! টাস্ক সফলভাবে সম্পন্ন হয়েছে। অটো ৳${rewardAmount.toFixed(2)} যোগ হয়েছে!`);
         }
       }, 1000);
     }
 
-    // সাইন-আপ বা সার্ভে টাস্ক (পোস্টব্যাক সাব-আইডি সহ)
+    // সাইন-আপ টাস্ক (পোস্টব্যাক সাবআইডি সহ)
     function startSignupTask(baseUrl) {
       const trackingUrl = `${baseUrl}&subid=${userId}`;
       tg.openLink(trackingUrl);
-      alert("সাইন-আপ পেজ ওপেন হয়েছে। সঠিক নিয়মে রুলস মেনে সাইন-আপ সম্পন্ন করুন, সফল হলে পোস্টব্যাক দ্বারা ব্যালেন্সে টাকা যুক্ত হবে।");
+      alert("সাইন-আপ পেজ ওপেন হয়েছে। সঠিক নিয়মে সাইন-আপ সম্পন্ন করলে পোস্টব্যাক সার্ভারের মাধ্যমে অটো ব্যালেন্সে ৳২.০০ যোগ হয়ে যাবে।");
     }
 
     function copyRef() {
@@ -271,16 +313,34 @@
       if (userBalance >= MIN_WITHDRAW) {
         let phone = prompt("আপনার বিকাশ/নগদ নম্বরটি দিন:");
         if (phone) {
-          alert("পেমেন্ট রিকোয়েস্ট সফল হয়েছে! এডমিন শীঘ্রই প্রসেস করবেন।");
           tg.sendData(JSON.stringify({ type: "WITHDRAWAL", amount: userBalance, number: phone }));
-          userBalance -= MIN_WITHDRAW;
+          
+          let history = JSON.parse(localStorage.getItem('withdraw_history_' + userId)) || [];
+          let now = new Date().toLocaleString();
+          
+          history.unshift({
+            amount: userBalance.toFixed(2),
+            number: phone,
+            status: 'Pending',
+            date: now
+          });
+          
+          localStorage.setItem('withdraw_history_' + userId, JSON.stringify(history));
+
+          alert("পেমেন্ট রিকোয়েস্ট সফল হয়েছে! এডমিন শীঘ্রই প্রসেস করবেন।");
+          
+          userBalance = 0;
           localStorage.setItem('user_bal_' + userId, userBalance);
+          
           updateUI();
+          loadWithdrawHistory();
         }
       }
     }
 
     updateUI();
+    loadWithdrawHistory();
   </script>
 </body>
-</html>
+  </html>
+  
