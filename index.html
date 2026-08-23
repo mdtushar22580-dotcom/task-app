@@ -31,6 +31,28 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
     }
 
+    .notice-box {
+      background: linear-gradient(145deg, #1e1b4b, #0f172a);
+      border: 1px solid #6366f1;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #c7d2fe;
+      text-align: left;
+    }
+
+    .notice-box b {
+      color: #38bdf8;
+    }
+
+    .notice-box ul {
+      margin: 8px 0 0 0;
+      padding-left: 18px;
+    }
+
+    .notice-box li {
+      margin-bottom: 6px;
+    }
+
     .balance-box {
       text-align: center;
       background: linear-gradient(145deg, #070a12, #0f172a);
@@ -72,14 +94,11 @@
       overflow: hidden;
     }
 
-    .btn:hover {
-      box-shadow: 0 0 18px var(--sky-glow);
-      color: #ffffff;
-      border-color: #7dd3fc;
-    }
-
-    .btn:active {
-      transform: scale(0.96);
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      border-color: #334155;
+      color: #64748b;
     }
 
     .btn-withdraw {
@@ -92,6 +111,17 @@
       box-shadow: 0 0 15px var(--sky-glow);
     }
 
+    .ref-box {
+      background: #020617;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px dashed var(--sky-primary);
+      font-size: 11px;
+      color: #94a3b8;
+      word-break: break-all;
+      margin-top: 8px;
+    }
+
     h3 {
       margin: 0 0 12px 0;
       font-size: 14px;
@@ -99,64 +129,158 @@
       text-transform: uppercase;
       letter-spacing: 0.8px;
     }
+
+    .timer-info {
+      color: #eab308;
+      font-size: 12px;
+      margin-top: 8px;
+      text-align: center;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 
-  <div class="card balance-box">
-    <h3>মোট অর্জিত ব্যালেন্স</h3>
-    <div class="balance" id="balance">৳ 0.00</div>
+  <!-- সাজানো জরুরি নোটিশ বক্স -->
+  <div class="card notice-box">
+    <h3>📌 নিয়মাবলী ও কাজের নির্দেশিকা</h3>
+    <ul>
+      <li>প্রতিটি <b>অ্যাড (Ad)</b> দেখার সময় অবশ্যই মিনিমাম <b>২০ সেকেন্ড</b> অপেক্ষা করতে হবে।</li>
+      <li>প্রতিটি অ্যাড ভিউতে পাবেন: <b>৳০.১০ (১০ পয়সা)</b>।</li>
+      <li><b>Signup & Survey</b> কাজগুলোতে রুলস মেনে সম্পূর্ণ সঠিকভাবে সাইন-আপ করতে হবে (প্রতিটিতে <b>৳২.০০</b>)।</li>
+      <li>প্রতিটি সফল <b>রেফারে</b> পাবেন: <b>৳১.০০</b>।</li>
+    </ul>
   </div>
 
-  <!-- এড দেখে ইনকাম সেকশন -->
+  <div class="card balance-box">
+    <h3>মোট অর্জিত ব্যালেন্স</h3>
+    <div class="balance">৳ <span id="balance">0.00</span></div>
+  </div>
+
+  <!-- এড দেখে ইনকাম সেকশন (২০ সেকেন্ড টাইমার) -->
   <div class="card">
     <h3>📺 Ad Earn (বিজ্ঞাপন দেখে ইনকাম)</h3>
+    <p style="font-size: 11px; color: #94a3b8; margin-top:-8px;">প্রতি অ্যাডে পাবেন ৳০.১০ (২০ সেকেন্ড দেখতে হবে)</p>
     <div class="grid">
-      <button class="btn" onclick="openLink('Https://omg10.com/4/11635816')">🎬 Ad Earn 1</button>
-      <button class="btn" onclick="openLink('Https://www.profitableratecpmnetwork.com/mc8zje23?key=a87e9978cdbfe3996bbc3275ec43bcb2')">📺 Ad Earn 2</button>
-      <button class="btn" onclick="openLink('Https://affectionatestorage.com/ez19Km')">⚡ Ad Earn 3</button>
-      <button class="btn" onclick="openLink('https://notik.me')">💎 Offerwall Ads</button>
+      <button class="btn task-btn" onclick="startAdTask('Https://omg10.com/4/11635816', 0.10, 20)">🎬 Ad Earn 1</button>
+      <button class="btn task-btn" onclick="startAdTask('Https://www.profitableratecpmnetwork.com/mc8zje23?key=a87e9978cdbfe3996bbc3275ec43bcb2', 0.10, 20)">📺 Ad Earn 2</button>
+      <button class="btn task-btn" onclick="startAdTask('Https://affectionatestorage.com/ez19Km', 0.10, 20)">⚡ Ad Earn 3</button>
+      <button class="btn task-btn" onclick="startAdTask('https://notik.me', 0.15, 20)">💎 Offerwall Ads</button>
     </div>
+    <div id="timer-status" class="timer-info" style="display: none;"></div>
   </div>
 
   <!-- সাইন আপ বা সার্ভে করে ইনকাম সেকশন -->
   <div class="card">
     <h3>📝 Signup Earn (সাইন-আপ ও সার্ভে)</h3>
+    <p style="font-size: 11px; color: #94a3b8; margin-top:-8px;">প্রতিটি সার্ভে/সাইন-আপে পাবেন ৳২.০০ (সঠিক নিয়মে করতে হবে)</p>
     <div class="grid">
-      <button class="btn" onclick="openLink('https://singingfiles.com/show.php?l=0&u=2551189&id=54746')">🤖 Signup Earn (Android)</button>
-      <button class="btn" onclick="openLink('https://singingfiles.com/show.php?l=0&u=2551189&id=54747')">🍎 Signup Earn (iPhone)</button>
-      <button class="btn" onclick="openLink('https://singingfiles.com/show.php?l=0&u=2551189&id=36521')">📱 Signup Earn (Mobile All)</button>
+      <button class="btn task-btn" onclick="startSignupTask('https://singingfiles.com/show.php?l=0&u=2551189&id=54746')">🤖 Signup (Android)</button>
+      <button class="btn task-btn" onclick="startSignupTask('https://singingfiles.com/show.php?l=0&u=2551189&id=54747')">🍎 Signup (iPhone)</button>
+      <button class="btn task-btn" onclick="startSignupTask('https://singingfiles.com/show.php?l=0&u=2551189&id=36521')">📱 Signup (Mobile)</button>
     </div>
+  </div>
+
+  <!-- রেফারেল সেকশন -->
+  <div class="card">
+    <h3>👥 রেফার করে আয়</h3>
+    <p style="font-size: 11px; color: #94a3b8; margin: 0 0 8px 0;">প্রতি রেফারে পাবেন ৳ ১.০০</p>
+    <button class="btn" onclick="copyRef()">🔗 রেফারেল লিংক কপি করুন</button>
+    <div class="ref-box" id="ref-link">লিংক জেনারেট হচ্ছে...</div>
   </div>
 
   <!-- উইথড্র সেকশন -->
   <div class="card">
-    <h3>উইথড্র সেকশন</h3>
+    <h3>💳 উইথড্র সেকশন</h3>
     <p style="font-size: 12px; color: #94a3b8; margin: 0 0 10px 0;">সর্বনিম্ন পেআউট লিমিট: ৳ ১০০ (বিকাশ / নগদ)</p>
-    <button class="btn btn-withdraw" onclick="withdraw()">💳 পেমেন্ট রিকোয়েস্ট দিন</button>
+    <button class="btn btn-withdraw" id="withdraw-btn" disabled onclick="withdraw()">৳ ১০০ না হলে উইথড্র লক</button>
   </div>
 
   <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    let userBalance = 0.00;
+    // ==================== [বটের ইউজারনেম সেটআপ] ====================
+    const BOT_USERNAME = "shorttimeearntabot"; 
+    const MIN_WITHDRAW = 100.00;
+    // =============================================================
 
-    function openLink(url) {
+    const userId = tg.initDataUnsafe?.user?.id || "guest_user";
+    let userBalance = parseFloat(localStorage.getItem('user_bal_' + userId)) || 5.00; // সাইন-আপ বোনাস ৫ টাকা
+
+    function updateUI() {
+      document.getElementById('balance').innerText = userBalance.toFixed(2);
+      
+      const withdrawBtn = document.getElementById('withdraw-btn');
+      if (userBalance >= MIN_WITHDRAW) {
+        withdrawBtn.disabled = false;
+        withdrawBtn.innerText = "💳 পেমেন্ট রিকোয়েস্ট দিন";
+      } else {
+        withdrawBtn.disabled = true;
+        withdrawBtn.innerText = `উইথড্র করতে আরও ৳ ${(MIN_WITHDRAW - userBalance).toFixed(2)} লাগবে`;
+      }
+
+      const refUrl = `https://t.me/${BOT_USERNAME}?start=ref_${userId}`;
+      document.getElementById('ref-link').innerText = refUrl;
+    }
+
+    // অ্যাড দেখার টাইমার ফাংশন (২০ সেকেন্ড)
+    function startAdTask(url, rewardAmount, waitSeconds = 20) {
+      const timerStatus = document.getElementById('timer-status');
+      const allButtons = document.querySelectorAll('.task-btn');
+      
+      allButtons.forEach(btn => btn.disabled = true);
+      timerStatus.style.display = "block";
+
       tg.openLink(url);
+
+      let timer = waitSeconds;
+      timerStatus.innerText = `⏳ টাস্ক ভেরিফাই হচ্ছে... ${timer} সেকেন্ড অ্যাপে থাকুন`;
+
+      let interval = setInterval(() => {
+        timer--;
+        timerStatus.innerText = `⏳ টাস্ক ভেরিফাই হচ্ছে... ${timer} সেকেন্ড অ্যাপে থাকুন`;
+
+        if (timer <= 0) {
+          clearInterval(interval);
+          userBalance += rewardAmount;
+          localStorage.setItem('user_bal_' + userId, userBalance);
+          updateUI();
+
+          timerStatus.style.display = "none";
+          allButtons.forEach(btn => btn.disabled = false);
+          alert(`🎉 অভিনন্দন! টাস্ক সফলভাবে সম্পন্ন হয়েছে। ৳${rewardAmount.toFixed(2)} যোগ হয়েছে!`);
+        }
+      }, 1000);
+    }
+
+    // সাইন-আপ বা সার্ভে টাস্ক (পোস্টব্যাক সাব-আইডি সহ)
+    function startSignupTask(baseUrl) {
+      const trackingUrl = `${baseUrl}&subid=${userId}`;
+      tg.openLink(trackingUrl);
+      alert("সাইন-আপ পেজ ওপেন হয়েছে। সঠিক নিয়মে রুলস মেনে সাইন-আপ সম্পন্ন করুন, সফল হলে পোস্টব্যাক দ্বারা ব্যালেন্সে টাকা যুক্ত হবে।");
+    }
+
+    function copyRef() {
+      const link = document.getElementById('ref-link').innerText;
+      navigator.clipboard.writeText(link);
+      alert("রেফারেল লিংক কপি হয়েছে! প্রতি সফল রেফারে পাবেন ৳ ১.০০।");
     }
 
     function withdraw() {
-      if (userBalance >= 100) {
+      if (userBalance >= MIN_WITHDRAW) {
         let phone = prompt("আপনার বিকাশ/নগদ নম্বরটি দিন:");
         if (phone) {
           alert("পেমেন্ট রিকোয়েস্ট সফল হয়েছে! এডমিন শীঘ্রই প্রসেস করবেন।");
           tg.sendData(JSON.stringify({ type: "WITHDRAWAL", amount: userBalance, number: phone }));
+          userBalance -= MIN_WITHDRAW;
+          localStorage.setItem('user_bal_' + userId, userBalance);
+          updateUI();
         }
-      } else {
-        alert("আপনার ব্যালেন্স পর্যাপ্ত নয়। সর্বনিম্ন ১০০ টাকা হলে উইথড্র দেওয়া যাবে।");
       }
     }
+
+    updateUI();
   </script>
 </body>
 </html>
