@@ -147,8 +147,8 @@
     <h3>📌 নিয়মাবলী ও কাজের নির্দেশিকা</h3>
     <ul>
       <li>প্রতিটি <b>অ্যাড (Ad)</b> দেখার সময় অবশ্যই মিনিমাম <b>২০ সেকেন্ড</b> অপেক্ষা করতে হবে।</li>
-      <li>সফলভাবে ২০ সেকেন্ড পূর্ণ হলে অটোমেটিক ব্যালেন্সে <b>৳০.১০</b> যোগ হবে।</li>
-      <li><b>Signup & Survey</b> কাজগুলোতে রুলস মেনে সম্পূর্ণ সাইন-আপ করলে অটো <b>৳২.০০</b> যোগ হবে।</li>
+      <li>সফলভাবে ২০ সেকেন্ড পূর্ণ হলে অটোমেটিক ব্যালেন্সে ৳০.১০ যোগ হবে।</li>
+      <li><b>Signup & Survey</b> কাজগুলো করার পর ব্যালেন্স দেখতে বা টাকা যোগ করতে <b>পেজটি একবার রিফ্রেশ (Refresh)</b> দিন।</li>
       <li>প্রতিটি সফল <b>রেফারে</b> পাবেন: <b>৳১.০০</b>।</li>
     </ul>
   </div>
@@ -158,7 +158,7 @@
     <div class="balance">৳ <span id="balance">5.00</span></div>
   </div>
 
-  <!-- এড দেখে ইনকাম সেকশন (অটো ১০ পয়সা যোগ) -->
+  <!-- এড দেখে ইনকাম সেকশন -->
   <div class="card">
     <h3>📺 Ad Earn (বিজ্ঞাপন দেখে ইনকাম)</h3>
     <p style="font-size: 11px; color: #94a3b8; margin-top:-8px;">প্রতি অ্যাডে পাবেন ৳০.১০ (২০ সেকেন্ড দেখতে হবে)</p>
@@ -266,7 +266,6 @@
       historyList.innerHTML = html;
     }
 
-    // অটো অ্যাড টাস্ক (২০ সেকেন্ড শেষ হলে অটো ১০ পয়সা যোগ হবে)
     function startAdTask(url, rewardAmount, waitSeconds = 20) {
       const timerStatus = document.getElementById('timer-status');
       const allButtons = document.querySelectorAll('.task-btn');
@@ -296,11 +295,10 @@
       }, 1000);
     }
 
-    // সাইন-আপ টাস্ক (পোস্টব্যাক সাবআইডি সহ)
     function startSignupTask(baseUrl) {
       const trackingUrl = `${baseUrl}&subid=${userId}`;
       tg.openLink(trackingUrl);
-      alert("সাইন-আপ পেজ ওপেন হয়েছে। সঠিক নিয়মে সাইন-আপ সম্পন্ন করলে পোস্টব্যাক সার্ভারের মাধ্যমে অটো ব্যালেন্সে ৳২.০০ যোগ হয়ে যাবে।");
+      alert("সাইন-আপ পেজ ওপেন হয়েছে। সঠিক নিয়মে সাইন-আপ সম্পন্ন করার পর পেজ রিফ্রেশ দিলেই ব্যালেন্স আপডেট হয়ে যাবে।");
     }
 
     function copyRef() {
@@ -342,5 +340,5 @@
     loadWithdrawHistory();
   </script>
 </body>
-  </html>
-  
+        </html>
+    
